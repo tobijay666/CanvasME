@@ -23,5 +23,12 @@ io.sockets.on('connection',newConnection);
 function newConnection(socket){
     console.log('newConnection: ' + socket.id);
     
+    socket.on('mouse', mouseMessage);
+
+    function mouseMessage(data){
+        socket.broadcast.emit('mouse',data); // send to every one except me
+        // io.sockets.emit('mouse',data); Globally sending message including me
+        console.log(data);
+    }
     // console.log(socket);
 }
