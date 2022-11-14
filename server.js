@@ -1,4 +1,9 @@
+// importing modules
 var express = require('express');
+var socket = require('socket.io');
+var mongoose = require('mongoose');
+var cors = require('cors');
+var path = require('path');
 
 var app = express();
 var server = app.listen(3000);
@@ -8,7 +13,7 @@ app.use(express.static('public'));
 console.log("Running");
 
 
-var socket = require('socket.io');
+
 // var io = socket(server, {
 //     cors: {
 //       origin: "http://localhost:3000",
