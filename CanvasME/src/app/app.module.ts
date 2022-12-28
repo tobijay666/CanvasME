@@ -10,6 +10,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { ContactComponent } from './Home/contact/contact.component';
 import { MainComponent } from './Play/main/main.component';
+import { RoomSelectionComponent } from './Play/room-selection/room-selection.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { MainComponent } from './Play/main/main.component';
     LoginComponent,
     SignupComponent,
     ContactComponent,
-    MainComponent
+    MainComponent,
+    RoomSelectionComponent
   ],
   imports: [
     BrowserModule,

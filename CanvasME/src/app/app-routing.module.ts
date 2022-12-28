@@ -5,6 +5,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { ContactComponent } from './Home/contact/contact.component';
 import { HomeComponent } from './Home/home/home.component';
 import { MainComponent } from './Play/main/main.component';
+import { RoomSelectionComponent } from './Play/room-selection/room-selection.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: 'Play/main',
     component:MainComponent
+  },
+  {
+    path: 'Play/room-selection',
+    component:RoomSelectionComponent
   }
 
     // children: [
