@@ -1,0 +1,30 @@
+{
+  "name": "canvasme",
+  "version": "1.0.0",
+  "description": "A pictionary gaming platform",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tobijay666/CanvasME.git"
+  },
+  "keywords": [
+    "Pictionary",
+    "Web",
+    "sockets",
+    "express",
+    "node"
+  ],
+  "author": "Anton Jayakody",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tobijay666/CanvasME/issues"
+  },
+  "homepage": "https://github.com/tobijay666/CanvasME#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
