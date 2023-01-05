@@ -1,0 +1,7 @@
+<div>
+  <form (ngSubmit)="onSubmit(roomForm)" #roomForm="ngForm">
+    <input type="hidden" name="_id" #_id = "ngModel" [(ngModel)]="roomService.selectedRoom._id">
+    <input type="text" name="title" #title="ngModel" [(ngModel)]="roomService.selectedRoom.title" placeholder="title">
+    <button type="submit">Submit</button>
+  </form>
+</div>
