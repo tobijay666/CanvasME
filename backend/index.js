@@ -20,8 +20,14 @@ var server = app.listen(3000, ()=> console.log('Server started at port: 3000'));
 // server.listen(3000, ()=> console.log('Server started at port: 3000'));
 app.use('/rooms',roomController);
 
-// var server = require('http').Server(app);
-var io = socket(server);
+// socket work
+var io = socket(server,{
+    cors: {
+      origin: "http://localhost:4200",
+      methods: ["GET", "POST"],
+      credentials: true,
+    },
+  });
 
 io.sockets.on('connection',(socket)=>{
     console.log('newConnection' + socket.id);
@@ -29,6 +35,14 @@ io.sockets.on('connection',(socket)=>{
     socket.on(connection.create, function(data){
         io.socket.emit('connection.create',data);
     })
+
+    socket.on('mouse', mouseMessage);
+
+    function mouseMessage(data){
+        socket.broadcast.emit('mouse',data); // send to every one except me
+        // io.sockets.emit('mouse',data); Globally sending message including me
+        console.log(data);
+    }
 
 })
 
