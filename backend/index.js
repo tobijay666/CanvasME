@@ -34,7 +34,20 @@ io.sockets.on('connection',(socket)=>{
 
     socket.on(connection.create, function(data){
         io.socket.emit('connection.create',data);
-    })
+    });
+
+    socket.on('chat', chatMessage);
+
+    function chatMessage(data){
+      socket.broadcast.emit('chat',data); // send to every one except me
+      // io.sockets.emit('mouse',data); Globally sending message including me
+      console.log(data);
+  }
+    // listen to chat
+    // socket.on('chat', function(data){
+      
+      // io.socket.emit('chat',data);
+    // });
 
     socket.on('mouse', mouseMessage);
 
