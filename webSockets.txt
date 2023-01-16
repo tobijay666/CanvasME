@@ -1,0 +1,2 @@
+1. cdn link from websockets.io into index.html
+2. set ("noImplicitAny":false) in tsconfig
