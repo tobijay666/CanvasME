@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const jwtSecret = 't3h54i56s7r67a464n249d2o65m8s24e78cr641e0t';
+// const jwtSecret = 't3h54i56s7r67a464n249d2o65m8s24e78cr641e0t';
 
 // var User = mongoose.model('User',{
 //     Name: {
@@ -44,15 +44,16 @@ var userSchema = new mongoose.Schema({
                 minlength:[6,'Password must have at least 6 characters']
             },
             saltSecret: String
-  });
+          });
 
-  userSchema.path('Email').validate((val)=>{
+userSchema.path('Email').validate((val)=>{
     regex=/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     return regex.test(val); 
-  },'invalid email');
+  },'invalid email'
+);
   
   //Events
-  userSchema.pre("save", function (next) {
+userSchema.pre('save', function (next) {
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(this.Password, salt, (err, hash) => {
         this.Password = hash;
@@ -64,13 +65,24 @@ var userSchema = new mongoose.Schema({
   
 
 userSchema.methods.verifyPassword = function (password) {
-    return bcrypt.compareSync(password, this.password);
-};
+    return bcrypt.compareSync(password, this.Password);
+}
 
+userSchema.methods.generateJwt = function () {
+  return jwt.sign({ _id: this._id},
+    "MySECRET#123",
+  {
+      expiresIn: "4m"
+  });
+}
   
 var User = mongoose.model("User", userSchema);
+module.exports = User;
+
+
+// var User = mongoose.model("User", userSchema);
 // export { User };
-  module.exports = {User};
+// module.exports = {User};
 
 
 // User.schema.methods.toJSON = function(){

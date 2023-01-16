@@ -1,13 +1,19 @@
+require('./db');
+const {mongoose} = require('./db.js');
+
+require('./auth/passport');
+// require('./auth/config');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 var socket = require('socket.io');
 const passport = require('passport');
 
-const passportConfig = require('./auth/passport');
 
 
-const {mongoose} = require('./db.js');
+
+
 
 var roomController = require('./controllers/RoomController.js');
 var userController = require('./controllers/UserController.js');
@@ -26,6 +32,7 @@ var server = app.listen(3000, ()=> console.log('Server started at port: 3000'));
 // server.listen(3000, ()=> console.log('Server started at port: 3000'));
 app.use('/rooms',roomController);
 app.use('/users',userController);
+
 
 //error handler
 app.use((err,req,res,next)=>{
