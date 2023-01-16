@@ -1,0 +1,54 @@
+<app-header></app-header>
+<section class="py-5">
+  <div class="container py-5">
+      <div class="row mb-4 mb-lg-5">
+          <div class="col-md-8 col-xl-6 text-center mx-auto">
+              <p class="fw-bold text-success mb-2">Sign up</p>
+              <h2 class="fw-bold">Welcome</h2>
+          </div>
+      </div>
+      <div class="row d-flex justify-content-center">
+          <div class="col-md-6 col-xl-4">
+              <div class="card">
+                  <div class="card-body text-center d-flex flex-column align-items-center">
+                      <div class="bs-icon-xl bs-icon-circle bs-icon-primary shadow bs-icon my-4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
+                              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path>
+                          </svg></div>
+                      <form method="post" #signUpForm = "ngForm" (ngSubmit)="signUpForm.valid&& onSubmit(signUpForm)">
+                          <div class="mb-3"><input class="form-control" #uname = "ngModel" [(ngModel)]="userService.selectedUser.uname" type="uname" name="uname" placeholder="UserName" required [ngClass]="{'invalid-textbox':signUpForm.submitted && !uname.valid}">
+                            <div *ngIf="signUpForm.submitted&&!uname.valid">
+                              <label class="validation-message">This field is required</label>
+                            </div>
+                          </div>
+                          <div class="mb-3"><input class="form-control" #email = "ngModel" [(ngModel)]="userService.selectedUser.email" type="email" name="email" placeholder="Email" required [pattern]="regexEmail" [ngClass]="{'invalid-textbox':signUpForm.submitted && !email.valid}">
+                            <div *ngIf="signUpForm.submitted&& email.errors">
+                              <label *ngIf="email.errors['required']" class="validation-message">This field is required</label>
+                              <label *ngIf="email.errors['pattern']" class="validation-message">Incorrect E-mail address</label>
+                            </div>
+                          </div>
+                          <!-- <input class="form-control" type="text" name="email" placeholder="Email" style="margin-top: 15px;"> -->
+                          <div class="mb-3"><input class="form-control" #password = "ngModel" [(ngModel)]="userService.selectedUser.password" type="password" name="password" placeholder="Password" required minlength="6" [ngClass]="{'invalid-textbox':signUpForm.submitted && !password.valid}">
+                            <div *ngIf="signUpForm.submitted&& password.errors">
+                              <label *ngIf="password.errors['minlength']" class="validation-message">Password must be at least <br>6 characters long</label>
+                              <label *ngIf="password.errors['required']" class="validation-message">This field is required</label>
+                            </div>
+
+                          </div>
+                          <div class="mb-3"><button class="btn btn-primary shadow d-block w-100" type="submit">Sign up</button></div>
+                          <p class="text-muted">Already have an account?&nbsp;<a href="auth/login">Log in</a></p>
+                      </form>
+                      <!-- Success message -->
+                      <div class="success-message" *ngIf="successMsg">
+                        Account Created!
+                      </div>
+                      <!-- Error message -->
+                      <div class="error-message" *ngIf="serverErrorMsg">
+                        {{serverErrorMsg}}
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<app-footer></app-footer>

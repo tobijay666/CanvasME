@@ -1,7 +1,42 @@
+
 <div>
   <form (ngSubmit)="onSubmit(roomForm)" #roomForm="ngForm">
     <input type="hidden" name="_id" #_id = "ngModel" [(ngModel)]="roomService.selectedRoom._id">
     <input type="text" name="title" #title="ngModel" [(ngModel)]="roomService.selectedRoom.title" placeholder="title">
     <button type="submit">Submit</button>
   </form>
+  <br>
+  <div id="chat-window">
+    <div id="output" *ngFor="let data of output">
+      <p>{{data.handle}}:{{data.message}}</p>
+    </div>
+  </div>
+  <input type="text" id="handle" [(ngModel)]="userName" placeholder="handle">
+  <input type="text" id="handle" [(ngModel)]="Message" placeholder="handle">
+  <button type="button" id="send" (click)="sendMessage()">send</button>
+
+</div>
+<div id="canv">
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Welcome to the Angular Sketchpad!</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>Click in the space below to draw with your mouse.</p>
+        <p>Type "c" on your keyboard to clear the screen.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="sketch-container">
+          <div id="sketch-holder"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

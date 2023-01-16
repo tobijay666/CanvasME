@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 // import { Observable } from 'rxjs/Observable';
 import {map} from 'rxjs/operators';
-import {Observable,of, from } from 'rxjs';
+// import {Observable,of, from } from 'rxjs';
+
 // import 'rxjs/add/operator/map';
 // import 'rxjs/add/operator/toPromise';
 
@@ -22,3 +23,4 @@ export class RoomService {
     return this.http.post(this.bURL,room);
   }
 }
+
