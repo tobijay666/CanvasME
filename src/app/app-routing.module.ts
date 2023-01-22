@@ -7,6 +7,7 @@ import { HomeComponent } from './Home/home/home.component';
 import { RoomComponent } from './room/room.component';
 import { AuthGuard } from './auth/auth.guard';
 import { PlayComponent } from './Play/play/play.component';
+import { SelectionComponent } from './Play/selection/selection.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,9 @@ const routes: Routes = [
   },
   {
     path: 'Room', component: RoomComponent, canActivate:[AuthGuard]
+  },
+  {
+    path: 'play/Select', component: SelectionComponent
   },
   {
     path: 'Contact', component: ContactUsComponent,
@@ -26,7 +30,7 @@ const routes: Routes = [
     path: 'auth/signup', component: SignUpComponent,
   },
   {
-    path: 'play', component: PlayComponent,
+    path: 'play/play', component: PlayComponent,
   }
 ];
 

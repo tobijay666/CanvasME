@@ -12,33 +12,56 @@ import { FooterComponent } from './Home/footer/footer.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { CreateComponent } from './Play/create/create.component';
 
 import { AuthGuard } from './auth/auth.guard';
 import { PlayComponent } from './Play/play/play.component';
+import { SelectionComponent } from './Play/selection/selection.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+import { MatButtonModule } from "@angular/material/button";
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatFormField } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { JoinComponent } from './Play/join/join.component';
+
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    RoomComponent,
-    HomeComponent,
-    HeaderComponent,
-    FooterComponent,
-    ContactUsComponent,
-    LoginComponent,
-    SignUpComponent,
-    PlayComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule
-  ],
-  exports: [
-    HeaderComponent,
-    FooterComponent,
-  ],
-  providers: [AuthGuard],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        RoomComponent,
+        HomeComponent,
+        HeaderComponent,
+        FooterComponent,
+        ContactUsComponent,
+        LoginComponent,
+        SignUpComponent,
+        PlayComponent,
+        SelectionComponent,
+        CreateComponent,
+        JoinComponent
+    ],
+    exports: [
+        HeaderComponent,
+        FooterComponent
+    ],
+    providers: [AuthGuard],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatAutocompleteModule,
+        MatFormFieldModule,
+        MatInputModule,
+    ]
 })
 export class AppModule { }

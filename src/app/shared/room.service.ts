@@ -8,19 +8,24 @@ import {map} from 'rxjs/operators';
 // import 'rxjs/add/operator/toPromise';
 
 import { Room } from "./room.model";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
-  selectedRoom: Room = new Room;
-  rooms: Room[] = [];
-  readonly bURL = 'http://localhost:3000/rooms'
+  selectedRoom: Room ={
+    title: ''
+  }
+  // readonly bURL = 'http://localhost:3000/rooms'
 
   constructor(private http:HttpClient) { }
 
   postRoom(room:Room){
-    return this.http.post(this.bURL,room);
+    return this.http.post(environment.baseUrl+'rooms',room);
+  }
+  joinRoom(room:Room){
+    return this.http.post(environment.baseUrl+'rooms/join',room);
   }
 }
 

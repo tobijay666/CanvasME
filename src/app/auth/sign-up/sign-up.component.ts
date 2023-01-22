@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from 'src/app/shared/user.service';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -13,9 +15,10 @@ export class SignUpComponent implements OnInit {
   successMsg: boolean = false;
   serverErrorMsg!: string;
 
-  constructor(public userService: UserService) { }
+  constructor(public userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
+
   }
 
   onSubmit(form: NgForm){
@@ -24,6 +27,7 @@ export class SignUpComponent implements OnInit {
         this.successMsg=true;
         setTimeout(()=> this.successMsg = false,5000);
         this.resetForm(form);
+        this.router.navigateByUrl('/auth/login');
       }
       ,err=>{
         if (err.status == 422){
