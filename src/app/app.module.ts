@@ -34,6 +34,10 @@ import { PlayComponent } from './Play/play/play.component';
     FormsModule,
     HttpClientModule
   ],
+  exports: [
+    HeaderComponent,
+    FooterComponent,
+  ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
