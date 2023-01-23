@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import * as p5 from 'p5';
 import { ChatService } from 'src/app/shared/chat.service';
 import { RoomService } from 'src/app/shared/room.service';
 import { UserService } from 'src/app/shared/user.service';
+
+import {MatRadioModule} from '@angular/material/radio';
+import {MatDividerModule} from '@angular/material/divider';
 
 @Component({
   selector: 'app-play',
@@ -20,8 +23,16 @@ export class PlayComponent implements OnInit {
   canvas: any;
   sw=2;
   private socket:any;
+  colorPicker: any;
+  brushSize: any;
+  brushX: any;
+  brushY: any;
 
-  constructor(public roomService: RoomService, private chatService:ChatService, private userService:UserService) { }
+  // @ViewChild('colorpick') colorpick!: ElementRef ;
+
+  constructor(public roomService: RoomService, private chatService:ChatService,
+     private userService:UserService, public radio:MatRadioModule, public divider:MatDividerModule) { }
+
 
   ngOnInit(): void {
     this.chatService.listen('chat').subscribe((data) => this.updateMessage(data));
@@ -68,26 +79,41 @@ export class PlayComponent implements OnInit {
       // };
 
       s.newDrawing=(data: any) =>{
-        s.noStroke();
-        s.fill(255,0,100);
-        s.ellipse(data.x,data.y,60,60);
+        // s.noStroke();
+        // s.color(data.color);
+        s.stroke(data.color);
+        s.fill(data.color);
+        s.ellipse(data.x,data.y,data.size,data.size);
       }
 
 
       s.mouseDragged= () => {
         console.log('Sending'+s.mouseX+','+s.mouseY);
 
+        if (this.brushSize){
+          this.brushX = this.brushSize;
+          this.brushY = this.brushSize;
+        }
+        else{
+          this.brushX = 10;
+          this.brushY = 10;
+        }
+
         var data = {
           x:s.mouseX,
-          y:s.mouseY
+          y:s.mouseY,
+          color:this.colorPicker,
+          size:this.brushX
         }
         // this.socket.emit('mouse', data);
         this.chatService.emit('mouse',data);
 
-
-        s.noStroke();
-        s.fill(255);
-        s.ellipse(s.mouseX,s.mouseY,60,60);
+        console.log(this.colorPicker);
+        console.log(this.brushSize,this.brushY,this.brushX);
+        // s.noStroke();
+        s.stroke(this.colorPicker);
+        s.fill(this.colorPicker);
+        s.ellipse(s.mouseX,s.mouseY,this.brushX,this.brushY);
       };
 
       // s.mouseReleased = () => {
@@ -97,11 +123,11 @@ export class PlayComponent implements OnInit {
       //   console.log(`color is now ${this.c[this.strokeColor]}`);
       // };
 
-      // s.keyPressed = () => {
-      //   if (s.key === 'c') {
-      //     window.location.reload();
-      //   }
-      // };
+      s.keyPressed = () => {
+        if (s.key === 'r') {
+          window.location.reload();
+        }
+      };
     };
 
     this.canvas = new p5(sketch);

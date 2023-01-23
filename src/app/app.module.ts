@@ -13,6 +13,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { CreateComponent } from './Play/create/create.component';
+import { JoinComponent } from './Play/join/join.component';
+
 
 import { AuthGuard } from './auth/auth.guard';
 import { PlayComponent } from './Play/play/play.component';
@@ -26,7 +28,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatFormField } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { JoinComponent } from './Play/join/join.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatDividerModule} from '@angular/material/divider';
+
 
 
 
@@ -62,6 +66,8 @@ import { JoinComponent } from './Play/join/join.component';
         MatAutocompleteModule,
         MatFormFieldModule,
         MatInputModule,
+        MatRadioModule,
+        MatDividerModule
     ]
 })
 export class AppModule { }

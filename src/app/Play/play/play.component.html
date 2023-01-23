@@ -28,7 +28,35 @@
       <div class="col">
         <p>Use your mouse to draw.</p>
         <p>Click on the chat icon to open the chat.</p>
+        <p>Press R to clear the canvas.</p>
       </div>
+      <!-- <input id="hex-code" /> -->
+      <div class="col">
+        <br>
+        <label for="">Pick Your Color to draw: </label>
+        <input [(ngModel)] = "colorPicker" id="picker" type="color" value="#ffffff" />
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+        <label for="">Select Brush size:</label>
+
+        <div class="container">
+          <div class="row">
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="brushSize">
+              <div class="col-sm">
+                <mat-radio-button value="10" style="margin-right:10%;">S</mat-radio-button>
+
+                <mat-radio-button value="30" style="margin-right:10%;">M</mat-radio-button>
+                <mat-radio-button value="60" >L</mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </div>
+        </div>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+
     </div>
     <div class="row">
       <div class="col">
