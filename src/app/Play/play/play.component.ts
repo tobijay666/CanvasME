@@ -84,6 +84,7 @@ export class PlayComponent implements OnInit {
         s.stroke(data.color);
         s.fill(data.color);
         s.ellipse(data.x,data.y,data.size,data.size);
+
       }
 
 
