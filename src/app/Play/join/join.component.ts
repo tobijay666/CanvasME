@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 })
 export class JoinComponent implements OnInit {
+  errorMsg!: string;
 
   constructor(public roomService: RoomService, private router: Router,public dialog: MatDialog) { }
 
@@ -24,8 +25,15 @@ export class JoinComponent implements OnInit {
   onSubmit(form: NgForm){
     this.roomService.joinRoom(form.value).subscribe((res)=>{
       console.log('Works Fine'+JSON.stringify(res));
-      this.router.navigateByUrl('/play/play');
-      this.dialog.closeAll();
+      // var rest = JSON.stringify(res)
+      if (res['status'] == "Ok") {
+        this.router.navigateByUrl('/play/play');
+        this.dialog.closeAll();
+      } else {
+        form.resetForm();
+        this.errorMsg = "Room Not Found!"
+      }
+
 
     })
   }

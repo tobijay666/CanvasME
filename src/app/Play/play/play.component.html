@@ -21,19 +21,19 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <h1>Welcome to the Canvas!</h1>
+        <h1 *ngIf="role">Welcome to the Canvas! You are {{role}}</h1>
       </div>
     </div>
     <div class="row">
       <div class="col">
         <p>Use your mouse to draw.</p>
         <p>Click on the chat icon to open the chat.</p>
-        <p>Press R to clear the canvas.</p>
+        <p>Press ( ` ) to clear the canvas.</p>
       </div>
       <!-- <input id="hex-code" /> -->
-      <div class="col">
+      <div class="col" *ngIf="painter">
         <br>
-        <label for="">Pick Your Color to draw: </label>
+        <label for="" style="margin-right:5%;">Pick Your Color to draw: </label>
         <input [(ngModel)] = "colorPicker" id="picker" type="color" value="#ffffff" />
         <br>
         <mat-divider></mat-divider>
@@ -55,28 +55,59 @@
         <br>
         <mat-divider></mat-divider>
       </div>
+      <div class="col" *ngIf="!painter && guessAllowed">
+        <br>
+
+
+            <mat-form-field appearance="fill" style="width: 60%;">
+              <mat-label style="color: antiquewhite;">Your Guess:</mat-label>
+              <input matInput [(ngModel)]="guess">
+              <mat-hint align="start" style="color: brown;"><strong>You have {{guessCount}} guesses left.</strong> </mat-hint>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <button style="margin-left: 50%;" mat-raised-button (click)="guessSend()">Send</button>
+
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+      <div class="col" *ngIf="!painter && !guessAllowed">
+        <h3 style="color: brown; margin-top: 10%;">No more guesses allowed</h3>
+      </div>
 
 
     </div>
-    <div class="row">
+
+    <div class="row" *ngIf="painter">
+      <div class="col">
+        <div class="Topic" >
+          <h3>Topic to be drawn : {{this.topic}}</h3>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row" *ngIf="gameNotOver">
       <div class="col">
         <div class="sketch-container">
           <div id="sketch-holder"></div>
         </div>
       </div>
     </div>
+    <div class="gameWinner" *ngIf="!gameNotOver">
+      <h2 style="margin-top: 15%; margin-left: 10%; color: gold;"> {{gameWinner}} won the game</h2>
+    </div>
   </div>
 
 </div>
 
 
-<div>
+<div class="floatbottom" >
   <input type="checkbox" id="check">
   <label class="chat-btn" for="check">
      <i class="fa fa-commenting-o comment"></i>
      <i class="fa fa-close close"></i>
   </label>
-   <div class="wrapper">
+  <div class="wrapper" >
     <div class="header">
       <!-- <h6>Let's Chat - Online</h6> -->
     </div>
@@ -86,7 +117,7 @@
     <div id="output" class="text-dark text-left p-2" *ngFor="let data of output">
       <p>{{data.handle}}:{{data.message}}</p>
     </div>
-    <div class="chat-form">
+    <div class="chat-form" *ngIf="!painter">
       <!-- <input type="text" class="form-control" placeholder="Name"> -->
       <!-- <input type="text" class="form-control" placeholder="Email"> -->
       <!-- <textarea class="form-control" placeholder="Your Text Message"></textarea> -->
@@ -95,5 +126,6 @@
       <button type="button" class="btn btn-success btn-block text-light" id="send" (click)="sendMessage()">send</button>
       <!-- <button class="btn btn-success btn-block">Submit</button> -->
     </div>
-</div>
+  </div>
+
 </div>

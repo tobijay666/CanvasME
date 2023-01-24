@@ -18,7 +18,7 @@ const routes: Routes = [
     path: 'Room', component: RoomComponent, canActivate:[AuthGuard]
   },
   {
-    path: 'play/Select', component: SelectionComponent
+    path: 'play/Select', component: SelectionComponent, canActivate:[AuthGuard]
   },
   {
     path: 'Contact', component: ContactUsComponent,
@@ -30,7 +30,7 @@ const routes: Routes = [
     path: 'auth/signup', component: SignUpComponent,
   },
   {
-    path: 'play/play', component: PlayComponent,
+    path: 'play/play', component: PlayComponent, canActivate:[AuthGuard]
   }
 ];
 

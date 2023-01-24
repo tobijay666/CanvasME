@@ -6,6 +6,7 @@
         <mat-label>Room Id</mat-label>
         <input matInput placeholder="" name="title" #title="ngModel" [(ngModel)]="roomService.selectedRoom.title">
       </mat-form-field>
+      <label *ngIf="errorMsg" class="errorMsg">{{errorMsg}}</label>
 
         <button mat-raised-button color="primary" style="align-content: center; margin-left: 60%;" type="submit">Join</button>
 

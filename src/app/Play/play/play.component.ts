@@ -7,6 +7,7 @@ import { UserService } from 'src/app/shared/user.service';
 
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatInputModule} from '@angular/material/input';
 
 @Component({
   selector: 'app-play',
@@ -27,15 +28,81 @@ export class PlayComponent implements OnInit {
   brushSize: any;
   brushX: any;
   brushY: any;
+  payload:any;
+  role: any;
+  painter:any;
+  guess:any;
+  topic:any;
+  public guessCount= 3;
+  guessAllowed = true;
+  gameNotOver = true;
+  gameWinner:any;
 
   // @ViewChild('colorpick') colorpick!: ElementRef ;
 
   constructor(public roomService: RoomService, private chatService:ChatService,
-     private userService:UserService, public radio:MatRadioModule, public divider:MatDividerModule) { }
+     private userService:UserService, public radio:MatRadioModule,
+      public divider:MatDividerModule, public input:MatInputModule) { }
+
+
+  roleSetter(): void{
+    if (this.payload.uname == "nata") {
+      this.role = 'The Painter';
+      this.painter = true;
+      this.topic = this.topicSetter();
+      this.chatService.emit('topic',this.topic);
+    } else {
+      this.role = 'A Guesser';
+      this.chatService.listen('topic').subscribe((data) => this.topic = data);
+
+    }
+  }
+
+  guessSend(){
+    console.log(this.guess);
+    // console.log(this.topic);
+    if(this.guess.toLowerCase() === this.topic.toLowerCase()){
+      console.log("You won");
+      this.chatService.emit('game',this.payload.uname);
+      console.log("You won",this.payload.uname);
+      this.gameNotOver=false;
+      this.gameWinner = 'You';
+      setTimeout(function(){window.location.reload()},5000);
+
+    }
+    else{
+
+      if( this.guessCount<=1){
+        this.guessAllowed = false;
+      }
+      this.guessCount -= 1;
+    }
+  }
+  topicSetter(){
+    let topicArray = ['Car park','Tiger in a cage','Nail Polish','Postman','Night sky'];
+    const randomTopic = topicArray[Math.floor(Math.random() * topicArray.length)];
+    console.log(randomTopic);
+    return randomTopic;
+
+  }
+  gameOver(datax: any){
+    console.log(datax," Won The Game!");
+    this.gameWinner = datax;
+    this.gameNotOver=false;
+    if (this.gameNotOver) {
+      setTimeout(function(){window.location.reload()},5000);
+    }
+  }
 
 
   ngOnInit(): void {
     this.chatService.listen('chat').subscribe((data) => this.updateMessage(data));
+    this.payload = this.userService.getPayload();
+    this.roleSetter();
+    this.chatService.listen('game').subscribe((datax) => this.gameOver(datax));
+
+
+
 
 
 
@@ -104,7 +171,8 @@ export class PlayComponent implements OnInit {
           x:s.mouseX,
           y:s.mouseY,
           color:this.colorPicker,
-          size:this.brushX
+          size:this.brushX,
+
         }
         // this.socket.emit('mouse', data);
         this.chatService.emit('mouse',data);
@@ -125,7 +193,7 @@ export class PlayComponent implements OnInit {
       // };
 
       s.keyPressed = () => {
-        if (s.key === 'r') {
+        if (s.key === '`') {
           window.location.reload();
         }
       };
@@ -150,12 +218,12 @@ export class PlayComponent implements OnInit {
   }
 
   sendMessage():void {
-    let payload = this.userService.getPayload();
-    this.userName = payload.uname;
+
+    this.userName = this.payload.uname;
     console.log({
       message: this.Message,
-      handle: payload.uName,
-      paylad: payload
+      handle: this.payload.uname,
+      paylad: this.payload
     }
     );
     this.chatService.emit('chat',{

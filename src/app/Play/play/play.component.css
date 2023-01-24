@@ -74,6 +74,11 @@ button {
   margin-bottom: 10px
 }
 
+.floatbottom{
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
 .chat-form textarea {
   resize: none
 }
@@ -87,7 +92,8 @@ button {
 .btn:focus,
 .btn:hover {
   background-color: #3763f4;
-  border: #3763f4
+  border: #3763f4;
+
 }
 
 #check {
