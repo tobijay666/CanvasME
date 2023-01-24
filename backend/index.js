@@ -18,7 +18,9 @@ const passport = require('passport');
 var roomController = require('./controllers/RoomController.js');
 var userController = require('./controllers/UserController.js');
 
-var connection = require('./models/ioconnection.js');
+// var connection = require('./models/ioconnection.js');
+
+// var {chatRooms} = require('./models/chatRoom')
 
 
 var app = express();
@@ -55,11 +57,12 @@ var io = socket(server,{
   });
 
 io.sockets.on('connection',(socket)=>{
+
     console.log('newConnection' + socket.id);
 
-    socket.on(connection.create, function(data){
-        io.socket.emit('connection.create',data);
-    });
+    // socket.on(connection.create, function(data){
+    //     io.socket.emit('connection.create',data);
+    // });
 
     socket.on('chat', chatMessage);
 
@@ -81,6 +84,24 @@ io.sockets.on('connection',(socket)=>{
         // io.sockets.emit('mouse',data); Globally sending message including me
         console.log(data);
     }
+
+    socket.on('topic', topicMessage);
+
+    function topicMessage(data){
+        socket.broadcast.emit('topic',data); // send to every one except me
+        // io.sockets.emit('mouse',data); Globally sending message including me
+        console.log(data);
+    }
+
+    socket.on('game', gameMessage);
+
+    function gameMessage(data){
+        socket.broadcast.emit('game',data); // send to every one except me
+        // io.sockets.emit('mouse',data); Globally sending message including me
+        console.log(data);
+    }
+
+
 
 })
 
