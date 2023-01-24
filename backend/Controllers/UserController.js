@@ -65,7 +65,7 @@ router.post("/login", async (req, res) => {
        JWT_SECRET,{expiresIn:"25m"});
 
     console.log(token);
-    return res.json({status:"Ok",error:"",data:token});
+    return res.json({status:"Ok",error:"",data:token, name:user.Name});
   }
 
   res.json({status:"Error",error:"Invalid Username/Password"});

@@ -85,7 +85,21 @@ io.sockets.on('connection',(socket)=>{
         console.log(data);
     }
 
+    socket.on('topic', topicMessage);
 
+    function topicMessage(data){
+        socket.broadcast.emit('topic',data); // send to every one except me
+        // io.sockets.emit('mouse',data); Globally sending message including me
+        console.log(data);
+    }
+
+    socket.on('game', gameMessage);
+
+    function gameMessage(data){
+        socket.broadcast.emit('game',data); // send to every one except me
+        // io.sockets.emit('mouse',data); Globally sending message including me
+        console.log(data);
+    }
 
 
 
