@@ -1,0 +1,20 @@
+
+name: Build and Deploy
+
+#do something
+on: 
+  push:
+    branches:
+      - master
+# what i'm doing
+jobs:
+   build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@master
+
+      - name: "Setup Node.js"
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
