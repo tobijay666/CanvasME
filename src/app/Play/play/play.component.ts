@@ -78,6 +78,7 @@ export class PlayComponent implements OnInit {
       this.guessCount -= 1;
     }
   }
+
   topicSetter(){
     let topicArray = ['Car park','Tiger in a cage','Nail Polish','Postman','Night sky'];
     const randomTopic = topicArray[Math.floor(Math.random() * topicArray.length)];
