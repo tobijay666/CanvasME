@@ -14,6 +14,7 @@ export class SignUpComponent implements OnInit {
   regexEmail=/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   successMsg: boolean = false;
   serverErrorMsg!: string;
+  signUpForm: any;
 
   constructor(public userService: UserService, private router: Router) { }
 

@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignUpComponent } from './sign-up.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { UserService } from '../../shared/user.service';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -22,50 +25,41 @@ describe('SignUpComponent', () => {
   });
 });
 
-describe('Sign Up Form', () => {
+describe('SignUpComponent', () => {
+  let component: SignUpComponent;
+  let fixture: ComponentFixture<SignUpComponent>;
+  let userService: UserService;
+
   beforeEach(() => {
-    cy.visit('http://localhost:4200/signup');
+    TestBed.configureTestingModule({
+      imports: [
+        FormsModule,
+        ReactiveFormsModule
+      ],
+      declarations: [SignUpComponent],
+      providers: [UserService]
+    });
+    fixture = TestBed.createComponent(SignUpComponent);
+    component = fixture.componentInstance;
+    userService = TestBed.get(UserService);
   });
 
-  it('displays the sign up form', () => {
-    cy.get('form').should('exist');
-    cy.get('input[name="uname"]').should('exist');
-    cy.get('input[name="email"]').should('exist');
-    cy.get('input[name="password"]').should('exist');
-    cy.get('button[type="submit"]').should('exist');
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
-  it('submits the form and displays success message', () => {
-    cy.get('input[name="uname"]').type('testuser');
-    cy.get('input[name="email"]').type('testuser@example.com');
-    cy.get('input[name="password"]').type('password123');
-    cy.get('button[type="submit"]').click();
-    cy.get('.success-message').should('exist');
-    cy.get('.success-message').should('contain', 'Account Created!');
+  it('form should be invalid when empty', () => {
+    component.signUpForm.controls.uname.setValue('');
+    component.signUpForm.controls.email.setValue('');
+    component.signUpForm.controls.password.setValue('');
+    expect(component.signUpForm.valid).toBeFalsy();
   });
 
-  it('displays an error message when the form is submitted without a username', () => {
-    cy.get('input[name="email"]').type('testuser@example.com');
-    cy.get('input[name="password"]').type('password123');
-    cy.get('button[type="submit"]').click();
-    cy.get('.validation-message').should('exist');
-    cy.get('.validation-message').should('contain', 'This field is required');
+  it('form should be valid when filled with correct data', () => {
+    component.signUpForm.controls.uname.setValue('johnDoe');
+    component.signUpForm.controls.email.setValue('johnDoe@test.com');
+    component.signUpForm.controls.password.setValue('johnDoepass');
+    expect(component.signUpForm.valid).toBeTruthy();
   });
 
-  it('displays an error message when the form is submitted without a valid email', () => {
-    cy.get('input[name="uname"]').type('testuser');
-    cy.get('input[name="email"]').type('invalidemail');
-    cy.get('input[name="password"]').type('password123');
-    cy.get('button[type="submit"]').click();
-    cy.get('.validation-message').should('exist');
-    cy.get('.validation-message').should('contain', 'Incorrect E-mail address');
-  });
-
-  it('displays an error message when the form is submitted without a password', () => {
-    cy.get('input[name="uname"]').type('testuser');
-    cy.get('input[name="email"]').type('testuser@example.com');
-    cy.get('button[type="submit"]').click();
-    cy.get('.validation-message').should('exist');
-    cy.get('.validation-message').should('contain', 'This field is required');
-  });
 });

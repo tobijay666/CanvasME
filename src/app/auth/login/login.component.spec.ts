@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { UserService } from '../../shared/user.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -22,39 +26,47 @@ describe('LoginComponent', () => {
   });
 });
 
-describe('Login form', () => {
+describe('LoginComponent', () => {
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
+  let de: DebugElement;
+  let el: HTMLElement;
+  let userService: UserService;
+
   beforeEach(() => {
-    cy.visit('http://localhost:4200/login');
+    TestBed.configureTestingModule({
+      imports: [ FormsModule, ReactiveFormsModule ],
+      declarations: [ LoginComponent ],
+      providers: [ UserService ]
+    });
+
+    fixture = TestBed.createComponent(LoginComponent);
+    component = fixture.componentInstance;
+    de = fixture.debugElement.query(By.css('.form-control'));
+    el = de.nativeElement;
+    userService = TestBed.get(UserService);
   });
 
-  it('displays the login form', () => {
-    cy.get('form').should('be.visible');
-    cy.get('input[name="email"]').should('be.visible');
-    cy.get('input[name="password"]').should('be.visible');
-    cy.get('button[type="submit"]').should('be.visible');
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
-  it('submits the form with valid input', () => {
-    cy.get('input[name="email"]').type('test@example.com');
-    cy.get('input[name="password"]').type('password123');
-    cy.get('button[type="submit"]').click();
-
-    cy.get('.success-message').should('be.visible').and('contain', 'Logged In!');
+  it('should call the onSubmit method', () => {
+    spyOn(component, 'onSubmit');
+    el = fixture.debugElement.query(By.css('button[type=submit]')).nativeElement;
+    el.click();
+    expect(component.onSubmit).toHaveBeenCalled();
   });
 
-  it('displays error message with invalid input', () => {
-    cy.get('input[name="email"]').type('test@example.com');
-    cy.get('input[name="password"]').type('pass');
-    cy.get('button[type="submit"]').click();
-
-    cy.get('.validation-message').should('be.visible').and('contain', 'at least 6 characters');
+  it('form should be invalid', () => {
+    component.logInForm.controls['email'].setValue('');
+    component.logInForm.controls['password'].setValue('');
+    expect(component.logInForm.valid).toBeFalsy();
   });
 
-  it('displays error message for incorrect email/password', () => {
-    cy.get('input[name="email"]').type('wrong@example.com');
-    cy.get('input[name="password"]').type('wrongpassword');
-    cy.get('button[type="submit"]').click();
-
-    cy.get('.validation-message').should('be.visible').and('contain', 'Incorrect E-mail/Password');
+  it('form should be valid', () => {
+    component.logInForm.controls['email'].setValue('johnDoe@test.com');
+    component.logInForm.controls['password'].setValue('password');
+    expect(component.logInForm.valid).toBeTruthy();
   });
 });

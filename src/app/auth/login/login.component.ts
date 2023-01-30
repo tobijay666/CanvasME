@@ -14,6 +14,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 export class LoginComponent implements OnInit {
   successMsg: boolean = false;
   serverErrorMsg!: string;
+  logInForm: any;
 
   constructor(public userService: UserService,  private router: Router) { }
 

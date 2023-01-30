@@ -34,8 +34,6 @@ describe('PlayComponent', () => {
     expect(['Car park','Tiger in a cage','Nail Polish','Postman','Night sky']).toContain(topic);
   });
 
-
-
   it('should return different topics each time it is called', () => {
     const firstTopic = component.topicSetter();
     const secondTopic = component.topicSetter();
