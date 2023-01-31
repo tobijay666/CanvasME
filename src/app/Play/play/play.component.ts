@@ -60,14 +60,14 @@ export class PlayComponent implements OnInit {
 
   guessSend(){
     console.log(this.guess);
-    // console.log(this.topic);
+    console.log(this.topic);
     if(this.guess.toLowerCase() === this.topic.toLowerCase()){
       console.log("You won");
       this.chatService.emit('game',this.payload.uname);
       console.log("You won",this.payload.uname);
       this.gameNotOver=false;
       this.gameWinner = 'You';
-      setTimeout(function(){window.location.reload()},5000);
+      setTimeout(function(){window.location.reload()},10000);
 
     }
     else{
@@ -80,7 +80,7 @@ export class PlayComponent implements OnInit {
   }
 
   topicSetter(){
-    let topicArray = ['Car park','Tiger in a cage','Nail Polish','Postman','Night sky'];
+    let topicArray = ['Car park','Tiger in a cage','Nail Polish','Post man','Night sky'];
     const randomTopic = topicArray[Math.floor(Math.random() * topicArray.length)];
     console.log(randomTopic);
     return randomTopic;
