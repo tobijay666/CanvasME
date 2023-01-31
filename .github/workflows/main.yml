@@ -18,3 +18,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16.x
+          
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npm run build:ci
