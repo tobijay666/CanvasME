@@ -18,8 +18,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16.x
+          cache: "npm"
           
-      - name: Install
+      - name: "Install"
         run: npm ci
-      - name: Build
+      - name: "Build"
         run: npm run build:ci
